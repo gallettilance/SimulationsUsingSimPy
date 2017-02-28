@@ -4,6 +4,8 @@ import numpy.random as rnp
 import argparse
 import matplotlib.pyplot as plt
 
+#global parameters with fixed values for assignment - could easily extend to a more flexible program that takes input from
+#user to determine what these quantities should be (for later maybe?)
 class Parameters:
     
     arrmin = 1.5
@@ -20,16 +22,16 @@ class Parameters:
     seed = 123
 
 
-
+#generates Packets with a uniform interarrival rate
 class PacketGeneratorU( Process ):
     def produce( self, b ):
         while True:
-            Parameters.n = Parameters.n + 1
+            Parameters.n = Parameters.n + 1 #keeps track of the number of packets produced
             c = PacketU( b )
             c.start( c.doit() )
             yield hold, self, rnp.uniform(Parameters.arrmin, Parameters.arrmax)
 
-
+#generates a queue where packets that arrive from PacketGeneratorU() are serviced with a uniform service time (or queued)
 class PacketU( Process ):
     def __init__( self, resource ):
         Process.__init__( self )
@@ -38,14 +40,14 @@ class PacketU( Process ):
     def doit( self ):
         arrive = now()
         print "Time %f : %d arrived and about to join the queue  "%(now(), Parameters.n)
-        yield request, self, self.banku
+        yield request, self, self.banku 
         wait = now() - arrive
-        Parameters.wM.observe(wait)
+        Parameters.wM.observe(wait) #monitor waiting times
         print "Time %f : %d is about to get its service initiated "%(now(), Parameters.n)
-        yield hold, self, self.banku.servicetime()
+        yield hold, self, self.banku.servicetime() #uniform service time
         yield release, self, self.banku
         print "Time %f : %d service terminated and exits " %(now(), Parameters.n)
-
+#generates a uniform service time unless service time is varying (in which case use property that service time will eventually be constant)
 class BankU( Resource ):
     def servicetime( self ):
         if arg.generateRawResults == False:
@@ -54,7 +56,7 @@ class BankU( Resource ):
             return Parameters.service_time
 
 
-
+#generate packets with poisson arrival rate (so exponential interarrival time) 
 class PacketGenerator( Process ):
     def produce( self, b ):
         while True:
@@ -63,7 +65,7 @@ class PacketGenerator( Process ):
             c.start( c.doit() )
             yield hold, self, rnd.expovariate(1.0/Parameters.interarrival_time)
 
-
+#generate queue with an exponential service time
 class Packet( Process ):
     def __init__( self, resource ):
         Process.__init__( self )
@@ -79,23 +81,21 @@ class Packet( Process ):
         yield hold, self, self.bank.servicetime()
         yield release, self, self.bank
         print "Time %f : %d service terminated and exits " %(now(), Parameters.n)
-
+#generates an exponential service time
 class Bank( Resource ):
     def servicetime( self ):
-        if arg.generateRawResults == False:
-            return rnd.expovariate(1.0/Parameters.service_time)
-        if arg.generateRawResults == True:
-            return Parameters.service_time
+        return rnd.expovariate(1.0/Parameters.service_time) #service time should vary with specific simulations (see below)
 
 
 
-
+#use parser to input command line arguments to generate different queues based on input
 parser = argparse.ArgumentParser()
 parser.add_argument('-generateRawResults', '-generateRawResults', action='store_true', default = False)
 parser.add_argument('--type', '--type', required=True)
 arg = parser.parse_args()
 
-
+#either we run the simulation once with a specified seed to verify validity of simulation or we run multiple simultaions
+#each simulation should repeat 10 times while varying the service time and then plot service time against mean waiting time
 def run_simulation(bankservicetime, totaltime, numberofsimulations):
     if arg.type == 'UU1':
         for r in range(numberofsimulations):
@@ -154,7 +154,7 @@ def run_simulation(bankservicetime, totaltime, numberofsimulations):
 
 
 
-
+#how to run simulation based on command line user input
 if arg.generateRawResults == True:
     Parameters.service_time = 0.5
     while Parameters.service_time <= 11.0:
@@ -163,7 +163,7 @@ if arg.generateRawResults == True:
     
     print Parameters.x
     print Parameters.y
-    plt.scatter(Parameters.x, Parameters.y)
+    plt.scatter(Parameters.x, Parameters.y) #resulting plot
     plt.show()
 
 if arg.generateRawResults == False:
