@@ -15,5 +15,12 @@ After being serviced by the disk, the process:
 
 <BasicQueueSimulation.py>
 
-For MM1, compile code with:
-          python BasicQueueSimulation.py
+For MM1, compile with:
+          python BasicQueueSimulation.py --type MM1
+For UU1, compile with:
+          python BasicQueueSimultaion.py --type UU1
+For MM2, compile with:
+          python BasicQueueSimulation.py --type MM2
+
+To generate a plot of Average Queue Length (w) against Service Time (Ts) add -generateRawResults flag before --type flag
+ex: python BasicQueueSimulation.py -generateRawResults --type MM1
