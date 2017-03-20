@@ -24,7 +24,7 @@ class CPUGenerator( Process ):
             c = CPU_Behavior( b, Parameters.packageArrivalCounter )
             c.start( c.doit() )
             Parameters.packageArrivalCounter +=1
-            yield hold, self, rnd.expovariate(1.0/40)
+            yield hold, self, rnd.expovariate(40)
 
       
       
