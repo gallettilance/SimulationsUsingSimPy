@@ -38,6 +38,6 @@
 
 To generate a plot of Average Queue Length (w) against Service Time (Ts) add -generateRawResults flag before --type flag
 
-####Example:
+#### Example:
 
     python BasicQueueSimulation.py -generateRawResults --type MM1
