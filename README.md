@@ -1,6 +1,6 @@
-#Queue Simulations
+# Queue Simulations
 
-###NetworkOfQueues.py
+### NetworkOfQueues.py
 
 * Processes come into CPU with rate 40/s
 
@@ -21,16 +21,16 @@
           * circles back to get serviced by the CPU with probability .5
           * moves on to the Network with probability .5
 
-###BasicQueueSimulation.py
+### BasicQueueSimulation.py
 
 * For MM1, compile with:
-
           
           python BasicQueueSimulation.py --type MM1
           
 * For UU1, compile with:
 
           python BasicQueueSimultaion.py --type UU1
+
 * For MM2, compile with:
 
           python BasicQueueSimulation.py --type MM2
@@ -39,6 +39,5 @@
 To generate a plot of Average Queue Length (w) against Service Time (Ts) add -generateRawResults flag before --type flag
 
 ####Example:
-
 
     python BasicQueueSimulation.py -generateRawResults --type MM1
