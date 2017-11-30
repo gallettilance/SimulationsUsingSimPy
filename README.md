@@ -6,17 +6,17 @@
 
 * Setup:
 
-         'docker pull galletti/simulations:latest`
+         docker pull galletti/simulations:latest
 
 * Alternatively you can build the image locally:
 
    * cd to this repo and run
          
-         `docker build -t simuaations:latest .`
+         docker build -t simuaations:latest .
 
    * Then run
          
-         'docker run -it simulations`
+         docker run -it simulations
 
 * In the new shell, python2.7 and all the requirements will be install and you will be able to run the code as bellow
 
