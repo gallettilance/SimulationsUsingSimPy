@@ -1,5 +1,25 @@
 # Queue Simulations
 
+### Prerequisites
+
+* install docker
+
+* Setup:
+
+         'docker pull galletti/simulations:latest`
+
+* Alternatively you can build the image locally:
+
+   * cd to this repo and run
+         
+         `docker build -t simuaations:latest .`
+
+   * Then run
+         
+         'docker run -it simulations`
+
+* In the new shell, python2.7 and all the requirements will be install and you will be able to run the code as bellow
+
 ### NetworkOfQueues.py
 
 * Processes come into CPU with rate 40/s
@@ -41,3 +61,8 @@ To generate a plot of Average Queue Length (w) against Service Time (Ts) add -ge
 #### Example:
 
     python BasicQueueSimulation.py -generateRawResults --type MM1
+    
+    
+#### Issues
+
+generateRawResults cannot (yet) display plot from docker container
