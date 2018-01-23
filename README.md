@@ -6,7 +6,13 @@
 
 * Setup:
 
+   * Get the image:
+
          docker pull galletti/simulations:latest
+      
+   * Run:
+        
+         docker run -it simulations:latest /bin/bash
 
 * Alternatively you can build the image locally:
 
