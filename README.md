@@ -12,7 +12,7 @@
 
    * cd to this repo and run
          
-         docker build -t simuaations:latest .
+         docker build -t simulations:latest .
 
    * Then run
          
